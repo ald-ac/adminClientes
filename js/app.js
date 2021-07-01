@@ -3,11 +3,23 @@
     let DB;
 
     document.addEventListener('DOMContentLoaded', () => {
-        crearDB();
+        //Comprobar si ya existe la BD
+        comprobarBD();        
     });
 
-    function crearDB() {
+    function comprobarBD() {
+        const conectarDB = window.indexedDB.open('crm', 1);
 
+        conectarDB.onerror = function() {
+            crearDB();
+        }
+
+        conectarDB.onsuccess = function() {
+            leerBD();
+        }
+    }
+
+    function crearDB() {
         //Crear bd
         const crearDB = window.indexedDB.open('crm', 1);
 
@@ -33,7 +45,6 @@
             objectStore.createIndex('empresa', 'empresa', { unique: false });
             objectStore.createIndex('id', 'id', { unique: true });
         }
-
     }
 
 })();
