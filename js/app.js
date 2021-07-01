@@ -15,6 +15,7 @@
         }
 
         conectarDB.onsuccess = function() {
+            DB = conectarDB.result;
             leerBD();
         }
     }
@@ -44,6 +45,14 @@
             objectStore.createIndex('telefono', 'telefono', { unique: false });
             objectStore.createIndex('empresa', 'empresa', { unique: false });
             objectStore.createIndex('id', 'id', { unique: true });
+        }
+    }
+
+    function leerBD() {
+        const objectStore = DB.transaction(['crm']).objectStore('crm');
+
+        objectStore.openCursor().onsuccess = (e) => {
+            console.log(e.target.result);
         }
     }
 
