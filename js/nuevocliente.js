@@ -29,7 +29,6 @@
             telefono,
             empresa
         }
-
         cliente.id = Date.now();
 
         //Agregar a BD
@@ -37,9 +36,7 @@
     }
 
     function agregarClienteBD(cliente) {
-
         const transaction = DB.transaction(['crm'], 'readwrite');
-
         const objectStore = transaction.objectStore('crm');
 
         objectStore.add(cliente);

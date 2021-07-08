@@ -4,7 +4,6 @@ let DB;
 
 //Funciones
 function conectarDB() {
-
     //Mandar a abrir BD
     const conectarDB = window.indexedDB.open('crm', 1);
 
@@ -18,7 +17,6 @@ function conectarDB() {
 }
 
 function imprimirAlerta(mensaje, tipo) {
-
     const alerta = document.querySelector('.alerta');
 
     //Evitar varias alertas

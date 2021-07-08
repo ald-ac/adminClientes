@@ -48,9 +48,7 @@
         }
     
         abrirConexion.onsuccess = function() {
-            
             DB = abrirConexion.result;
-
             const objectStore = DB.transaction('crm').objectStore('crm');
 
             //Obtener objetos del cursor
@@ -80,7 +78,7 @@
                         </tr>
                     `;
                     cursor.continue();
-                 }
+                }
             }
         }
     }
