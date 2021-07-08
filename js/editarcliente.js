@@ -5,9 +5,6 @@
     const telefonoInput = document.querySelector('#telefono');
     const empresaInput = document.querySelector('#empresa');
 
-    //Variables
-    let DB;
-
     //Listeners
     document.addEventListener('DOMContentLoaded', () => {
         conectarDB();
@@ -38,6 +35,7 @@
                 if(cursor.value.id === Number(id)) {
                     cargarFormulario(cursor.value);
                 }
+                cursor.continue();
             }
         }
     }
@@ -48,19 +46,6 @@
         emailInput.value = email;
         telefonoInput.value = telefono;
         empresaInput.value = empresa;
-    }
-
-    function conectarDB() {
-        //Mandar a abrir BD
-        const conectarDB = window.indexedDB.open('crm', 1);
-
-        conectarDB.onerror = function() {
-            console.log('Ocurrió un error al abrir la bd');
-        }
-
-        conectarDB.onsuccess = function() {
-            DB = conectarDB.result;
-        }
     }
 
 })();

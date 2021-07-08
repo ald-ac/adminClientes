@@ -1,7 +1,8 @@
 (function() {
-
+    //Variables
     let DB;
 
+    //Listeners
     document.addEventListener('DOMContentLoaded', () => {
         crearDB();
     
@@ -10,6 +11,7 @@
         } 
     });
 
+    //Funciones
     function crearDB() {
         //Crear bd
         const crearDB = window.indexedDB.open('crm', 1);
