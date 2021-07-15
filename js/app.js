@@ -1,6 +1,4 @@
 (function() {
-    //Variables
-    //let DB;
     const listadoClientes = document.querySelector('#listado-clientes');
 
     //Listeners
