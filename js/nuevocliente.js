@@ -20,6 +20,8 @@
         //Que no esten vacios
         if(nombre === '' || email === '' || telefono === '' || empresa === '') {
             imprimirAlerta('Todos los campos son obligatorios', 'error');
+
+            return;
         }
 
         //Crear objeto literal con info

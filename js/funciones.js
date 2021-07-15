@@ -16,7 +16,7 @@ function conectarDB() {
     }
 }
 
-function imprimirAlerta(mensaje, tipo) {
+function imprimirAlerta(mensaje, tipo, deIndex) {
     const alerta = document.querySelector('.alerta');
 
     //Evitar varias alertas
@@ -33,7 +33,14 @@ function imprimirAlerta(mensaje, tipo) {
         divAlerta.textContent = mensaje;
 
         //Agregar a HTML
-        formulario.appendChild(divAlerta);
+        let lugarInsercion;
+        if(deIndex) {
+            lugarInsercion = document.querySelector('#alerta');
+        } else {
+            lugarInsercion = formulario;
+        }
+        
+        lugarInsercion.appendChild(divAlerta);
 
         //Remover alerta
         setTimeout(() => {

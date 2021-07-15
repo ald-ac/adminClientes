@@ -1,6 +1,7 @@
 (function() {
     //Variables
-    let DB;
+    //let DB;
+    const listadoClientes = document.querySelector('#listado-clientes');
 
     //Listeners
     document.addEventListener('DOMContentLoaded', () => {
@@ -9,6 +10,9 @@
         if(window.indexedDB.open('crm', 1)) {
             leerClientes();
         } 
+
+        //Escuchar evento de click en boton eliminar
+        listadoClientes.addEventListener('click', eliminarCliente);
     });
 
     //Funciones
@@ -48,13 +52,12 @@
         }
     
         abrirConexion.onsuccess = function() {
-            DB = abrirConexion.result;
+            //DB = abrirConexion.result;
             const objectStore = DB.transaction('crm').objectStore('crm');
 
             //Obtener objetos del cursor
             objectStore.openCursor().onsuccess = function(e) {
                 const cursor = e.target.result;
-                const listadoClientes = document.querySelector('#listado-clientes');
 
                 if(cursor) {
                     const { nombre, email, telefono, empresa, id } = cursor.value;
@@ -73,11 +76,39 @@
                         </td>
                         <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5">
                             <a href="editar-cliente.html?id=${id}" class="text-teal-600 hover:text-teal-900 mr-5">Editar</a>
-                            <a href="#" data-cliente="${id}" class="text-red-600 hover:text-red-900">Eliminar</a>
+                            <a href="#" data-cliente="${id}" class="text-red-600 hover:text-red-900 eliminar">Eliminar</a>
                         </td>
                         </tr>
                     `;
                     cursor.continue();
+                }
+            }
+        }
+    }
+
+    function eliminarCliente(e) {
+        //Si se presiona el enlace con clase eliminar
+        if(e.target.classList.contains('eliminar')) {
+            
+            //Verificar accion
+            const confirmacion = confirm('¿Desea eliminar realmente el cliente?');
+
+            if(confirmacion) {
+                idCliente = Number(e.target.dataset.cliente);
+                const transaction = DB.transaction(['crm'], 'readwrite');
+                const objectStore = transaction.objectStore('crm');
+
+                objectStore.delete(idCliente);
+                
+                transaction.oncomplete = function() {
+                    imprimirAlerta('Cliente eliminado correctamente', 'exito', true);
+
+                    //Eliminar del DOM
+                    e.target.parentElement.parentElement.remove();
+                }
+
+                transaction.onerror = function() {
+                    imprimirAlerta('Ocurrió un error al eliminar el cliente', 'error', true);
                 }
             }
         }
